@@ -9,20 +9,14 @@ import { TodoFooter } from './components/TodoFooter';
 import { Loader } from './components/Loader';
 import { ErrorNotification } from './components/ErrorNotifications';
 import { USER_ID } from './api/todos';
-
-enum TodoError {
-  LOAD = 'Unable to load todos',
-  EMPTY_TITLE = 'Title should not be empty',
-  ADD = 'Unable to add a todo',
-  DELETE = 'Unable to delete a todo',
-  UPDATE = 'Unable to update a todo',
-}
+import { TodoError } from './types/Todo.Error';
+import { Filter } from './types/Filter';
 
 export const App: React.FC = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [todos, setTodos] = useState<Todo[]>([]);
   const [error, setError] = useState<string | null>(null);
-  const [filter, setFilter] = useState<'all' | 'active' | 'completed'>('all');
+  const [filter, setFilter] = useState<Filter>(Filter.All);
 
   const [newTodoTitle, setTodoTitle] = useState('');
   const [tempTodo, setTempTodo] = useState<Todo | null>(null);
@@ -174,7 +168,7 @@ export const App: React.FC = () => {
     return true;
   });
 
-  function loadTodos() {
+   useEffect(() => {
     setIsLoading(true);
     setError(null);
 
@@ -182,20 +176,13 @@ export const App: React.FC = () => {
       .then(setTodos)
       .catch(() => setError(TodoError.LOAD))
       .finally(() => setIsLoading(false));
-  }
-
-  useEffect(() => {
-    loadTodos();
   }, []);
 
   useEffect(() => {
-    if (error) {
-      const timer = setTimeout(() => setError(null), 3000);
+    if (!error) return;
 
-      return () => clearTimeout(timer);
-    }
-
-    return undefined;
+    const timer = setTimeout(() => setError(null), 3000);
+    return () => clearTimeout(timer);
   }, [error]);
 
   return (
@@ -232,7 +219,7 @@ export const App: React.FC = () => {
           <TodoFooter
             activeCount={activeCount}
             filter={filter}
-            setFilter={setFilter}
+            onFilterChange={setFilter}
             todos={todos}
             handleClearCompleted={handleClearCompleted}
             deletingId={deletingId}
