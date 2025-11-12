@@ -108,9 +108,7 @@ export const App: React.FC = () => {
     }
 
     try {
-      await Promise.all(
-        completedTodos.map(todo => handleDeleteTodo(todo.id)),
-      );
+      await Promise.all(completedTodos.map(todo => handleDeleteTodo(todo.id)));
     } catch {
       setError(TodoError.DELETE);
     }
@@ -168,7 +166,7 @@ export const App: React.FC = () => {
     return true;
   });
 
-   useEffect(() => {
+  useEffect(() => {
     setIsLoading(true);
     setError(null);
 
@@ -179,9 +177,12 @@ export const App: React.FC = () => {
   }, []);
 
   useEffect(() => {
-    if (!error) return;
+    if (!error) {
+      return;
+    }
 
     const timer = setTimeout(() => setError(null), 3000);
+
     return () => clearTimeout(timer);
   }, [error]);
 
@@ -210,7 +211,7 @@ export const App: React.FC = () => {
             todos={filtredTodos}
             tempTodo={tempTodo}
             onDeleteTodo={handleDeleteTodo}
-            IdsToDelete={deletingIds}
+            idsToDelete={deletingIds}
             onUpdate={handleUpdateTodo}
           />
         )}
@@ -221,7 +222,7 @@ export const App: React.FC = () => {
             filter={filter}
             onFilterChange={setFilter}
             todos={todos}
-            onHandleClearCompleted={handleClearCompleted}
+            handleClearCompleted={handleClearCompleted}
           />
         )}
       </div>

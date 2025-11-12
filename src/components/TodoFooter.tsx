@@ -8,7 +8,7 @@ type Props = {
   filter: Filter;
   onFilterChange: (value: Filter) => void;
   todos: Todo[];
-  onHandleClearCompleted: () => Promise<void>;
+  handleClearCompleted: () => Promise<void>;
 };
 /* eslint-enable @typescript-eslint/indent */
 export const TodoFooter: React.FC<Props> = ({
@@ -16,7 +16,7 @@ export const TodoFooter: React.FC<Props> = ({
   filter,
   onFilterChange,
   todos,
-  onHandleClearCompleted,
+  handleClearCompleted,
 }) => {
   const hasCompleted = todos.some(todo => todo.completed);
 
@@ -47,7 +47,9 @@ export const TodoFooter: React.FC<Props> = ({
 
         <a
           href="#/completed"
-          className={cn('filter__link', { selected: filter === Filter.Completed })}
+          className={cn('filter__link', {
+            selected: filter === Filter.Completed,
+          })}
           data-cy="FilterLinkCompleted"
           onClick={() => onFilterChange(Filter.Completed)}
         >
@@ -59,7 +61,7 @@ export const TodoFooter: React.FC<Props> = ({
         type="button"
         className="todoapp__clear-completed"
         data-cy="ClearCompletedButton"
-        onClick={onHandleClearCompleted}
+        onClick={handleClearCompleted}
         disabled={!hasCompleted}
       >
         Clear completed

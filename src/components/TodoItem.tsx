@@ -75,7 +75,7 @@ export const TodoItem: React.FC<Props> = ({
           className="todo__status"
           checked={todo.completed}
           onChange={onToggleStatus}
-          disabled={isLoaderActive }
+          disabled={isLoaderActive}
         />
       </label>
       {isEditing ? (
@@ -99,7 +99,7 @@ export const TodoItem: React.FC<Props> = ({
             {todo.title}
           </span>
 
-          {!isLoaderActive  && (
+          {!isLoaderActive && (
             <button
               type="button"
               className="todo__remove"
@@ -113,7 +113,7 @@ export const TodoItem: React.FC<Props> = ({
       )}
       <div
         data-cy="TodoLoader"
-        className={cn('modal overlay', { 'is-active': isLoaderActive  })}
+        className={cn('modal overlay', { 'is-active': isLoaderActive })}
       >
         <div className="modal-background has-background-white-ter" />
         <div className="loader" />

@@ -6,7 +6,7 @@ type Props = {
   todos: Todo[];
   tempTodo: Todo | null;
   onDeleteTodo?: (todoId: number) => void;
-  IdsToDelete?: number[];
+  idsToDelete?: number[];
   onToggleStatus: (todoId: number, completed: boolean) => Promise<void>;
   updatingTodos: number[];
   onUpdate: (todoId: number, updatedData: Partial<Todo>) => Promise<void>;
@@ -16,7 +16,7 @@ export const TodoList: React.FC<Props> = ({
   todos,
   tempTodo,
   onDeleteTodo = () => {},
-  IdsToDelete = [],
+  idsToDelete = [],
   onToggleStatus,
   updatingTodos,
   onUpdate,
@@ -27,7 +27,7 @@ export const TodoList: React.FC<Props> = ({
         key={todo.id}
         todo={todo}
         onDelete={() => onDeleteTodo(todo.id)}
-        isDeleting={IdsToDelete.includes(todo.id)}
+        isDeleting={idsToDelete.includes(todo.id)}
         onToggleStatus={() => onToggleStatus(todo.id, !todo.completed)}
         isUpdating={updatingTodos.includes(todo.id)}
         onUpdate={onUpdate}
