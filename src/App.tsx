@@ -23,7 +23,7 @@ export const App: React.FC = () => {
 
   const [isAdding, setIsAdding] = useState(false);
 
-  const [deletingId, setDeletingId] = useState<number[]>([]);
+  const [deletingIds, setDeletingId] = useState<number[]>([]);
 
   const [updatingTodos, setUpdatingTodos] = useState<number[]>([]);
 
@@ -108,7 +108,7 @@ export const App: React.FC = () => {
     }
 
     try {
-      await Promise.allSettled(
+      await Promise.all(
         completedTodos.map(todo => handleDeleteTodo(todo.id)),
       );
     } catch {
@@ -210,7 +210,7 @@ export const App: React.FC = () => {
             todos={filtredTodos}
             tempTodo={tempTodo}
             onDeleteTodo={handleDeleteTodo}
-            deletingId={deletingId}
+            IdsToDelete={deletingIds}
             onUpdate={handleUpdateTodo}
           />
         )}
@@ -221,8 +221,7 @@ export const App: React.FC = () => {
             filter={filter}
             onFilterChange={setFilter}
             todos={todos}
-            handleClearCompleted={handleClearCompleted}
-            deletingId={deletingId}
+            onHandleClearCompleted={handleClearCompleted}
           />
         )}
       </div>
