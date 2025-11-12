@@ -185,6 +185,7 @@ export const App: React.FC = () => {
 
     return () => clearTimeout(timer);
   }, [error]);
+  
 
   return (
     <div className="todoapp">
@@ -222,7 +223,7 @@ export const App: React.FC = () => {
             filter={filter}
             onFilterChange={setFilter}
             todos={todos}
-            handleClearCompleted={handleClearCompleted}
+            onClearCompleted={handleClearCompleted}
           />
         )}
       </div>
